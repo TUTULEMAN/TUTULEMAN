@@ -1,0 +1,42 @@
+$Stochastic$ $Quiz$ $Game$
+
+print("Let's play a game.")
+question= input("Do you want to play a game? ")
+if question.lower()!= "yes":
+    end()
+
+#could consider adding an API that mixes up numbers for random addition numbers in "question"
+#could consider adding a timer 
+#find out way to generate unlimited amount of random questions until timer=0
+print("Lets play!")
+score=0
+answer=input("What's 1+1? ")
+question= 1+1
+result= str(question)
+if answer==result:
+             print("Correct!")
+             score+=1
+else:
+             print("Wrong")
+
+answer=input("What's 24+56? ")
+question= 24+56
+result= str(question)
+if answer==result:
+             print("Correct!")
+             score+=1
+else:
+             print("Wrong")
+             
+answer=input("What's 44+27? ")
+question= 44+27
+result= str(question)
+if answer==result:
+             print("Correct!")
+             score+=1
+else:
+             print("Wrong")
+
+print("You got "+ str(score)+ " points!")
+accuracy= (score/3)*100
+print("Your accuracy was: " +str(accuracy)+"%")
