@@ -1,4 +1,4 @@
-$Stochastic$ $Quiz$ $Game$
+$Quick$ $Addition$ $Game$
 
 print("Let's play a game.")
 question= input("Do you want to play a game? ")
