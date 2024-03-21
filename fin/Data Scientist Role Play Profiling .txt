@@ -1,0 +1,469 @@
+Data Scientist Role Play: Profiling and Analyzing the Yelp Dataset Coursera 
+Worksheet
+This is a 2-part assignment. In the first part, you are asked a series of 
+questions that will help you profile and understand the data just like a data 
+scientist would. For this first part of the assignment, you will be assessed 
+both on the correctness of your findings, as well as the code you used to 
+arrive at your answer. You will be graded on how easy your code is to read, 
+so remember to use proper formatting and comments where necessary.
+In the second part of the assignment, you are asked to come up with your own 
+inferences and analysis of the data for a particular research question you 
+want to answer. You will be required to prepare the dataset for the analysis 
+you choose to do. As with the first part, you will be graded, in part, on how 
+easy your code is to read, so use proper formatting and comments to 
+illustrate and communicate your intent as required.
+For both parts of this assignment, use this "worksheet." It provides all the 
+questions you are being asked, and your job will be to transfer your answers 
+and SQL coding where indicated into this worksheet so that your peers can 
+review your work. You should be able to use any Text Editor (Windows Notepad, 
+Apple TextEdit, Notepad ++, Sublime Text, etc.) to copy and paste your 
+answers. If you are going to use Word or some other page layout application, 
+just be careful to make sure your answers and code are lined appropriately.
+In this case, you may want to save as a PDF to ensure your formatting remains 
+intact for you reviewer.
+Part 1: Yelp Dataset Profiling and Understanding
+1. Profile the data by finding the total number of records for each of the 
+tables below:
+i. Attribute table = 10000
+ii. Business table = 10000
+iii. Category table = 10000
+iv. Checkin table = 10000
+v. elite_years table = 10000
+vi. friend table = 10000
+vii. hours table = 10000
+viii. photo table = 10000
+ix. review table = 10000
+x. tip table = 10000
+xi. user table = 10000
+2. Find the total distinct records by either the foreign key or primary key 
+for each table. If two foreign keys are listed in the table, please specify 
+which foreign key.
+i. Business = 10000(Primary Key: id)
+ii. Hours = 1562(Foreign Key: business_id)
+iii. Category = 2643(Foreign Key: business_id)
+iv. Attribute = 1115(Foreign Key: business_id)
+v. Review = 10000(Primary Key: id); 8090 (Foreign Key: business_id); 9581 
+(Foreign Key: user_id)
+vi. Checkin = 493 (Foreign Key: business_id)
+vii. Photo = 10000 (Primary Key: id); 6493 (Foreign Key: business_id)
+viii. Tip = 537 (Foreign Key: user_id); 3979 (Foreign Key: business_id)
+ix. User = 10000 (Primary Key: id)
+x. Friend = 11 (Foreign Key: user_id)
+xi. Elite_years = 2780 (Foreign Key: user_id)
+Note: Primary Keys are denoted in the ER-Diagram with a yellow key icon.
+3. Are there any columns with null values in the Users table? Indicate "yes," 
+or "no."
+Answer: no
+SQL code used to arrive at answer:
+select count(*)
+from user
+where name is null
+or review_count is null
+or yelping_since is null
+or useful is null
+or funny is null
+or cool is null
+or fans is null
+or average_stars is null
+or compliment_hot is null
+or compliment_more is null
+or compliment_profile is null
+or compliment_cute is null
+or compliment_list is null
+or compliment_note is null
+or compliment_plain is null
+or compliment_cool is null
+or compliment_funny is null
+or compliment_writer is null
+or compliment_photos is null;
+4. For each table and column listed below, display the smallest (minimum), 
+largest (maximum), and average (mean) value for the following fields:
+i. Table: Review, Column: Stars
+min: 1 max: 5 avg: 3.7082
+ii. Table: Business, Column: Stars
+min: 1 max: 5 avg: 3.6549
+iii. Table: Tip, Column: Likes
+min: 0 max: 2 avg: 0.0144
+iv. Table: Checkin, Column: Count
+min: 1 max: 53 avg: 1.9414
+v. Table: User, Column: Review_count
+min: 0 max: 2000 avg: 24.2995
+5. List the cities with the most reviews in descending order:
+SQL code used to arrive at answer:
+select city,
+SUM(review_count) as r_count
+from business
+group by city
+order by r_count desc;
+Copy and Paste the Result Below:
+-----------------+---------+
+| city | r_count |
++-----------------+---------+
+| Las Vegas | 82854 |
+| Phoenix | 34503 |
+| Toronto | 24113 |
+| Scottsdale | 20614 |
+| Charlotte | 12523 |
+| Henderson | 10871 |
+| Tempe | 10504 |
+| Pittsburgh | 9798 |
+| Montréal | 9448 |
+| Chandler | 8112 |
+| Mesa | 6875 |
+| Gilbert | 6380 |
+| Cleveland | 5593 |
+| Madison | 5265 |
+| Glendale | 4406 |
+| Mississauga | 3814 |
+| Edinburgh | 2792 |
+| Peoria | 2624 |
+| North Las Vegas | 2438 |
+| Markham | 2352 |
+| Champaign | 2029 |
+| Stuttgart | 1849 |
+| Surprise | 1520 |
+| Lakewood | 1465 |
+| Goodyear | 1155 |
++-----------------+---------+
+(Output limit exceeded, 25 of 362 total rows shown)
+6. Find the distribution of star ratings to the business in the following 
+cities:
+i. Avon
+select stars,
+Count(*) as Business_count
+from business
+where city="Avon"
+group by stars;
+Copy and Paste the Resulting Table Below (2 columns â€“ star rating and 
+count):
++-------+----------------+
+| stars | Business_count |
++-------+----------------+
+| 1.5 | 1 |
+| 2.5 | 2 |
+| 3.5 | 3 |
+| 4.0 | 2 |
+| 4.5 | 1 |
+| 5.0 | 1 |
+ii. Beachwood
+SQL code used to arrive at the answer:
+select stars,
+Count(*) as Business_count
+from business
+where city="Beachwood"
+group by stars;
+Copy and Paste the Resulting Table Below (2 columns â€“ star rating and 
+count):
++-------+----------------+
+| stars | Business_count |
++-------+----------------+
+| 2.0 | 1 |
+| 2.5 | 1 |
+| 3.0 | 2 |
+| 3.5 | 2 |
+| 4.0 | 1 |
+| 4.5 | 2 |
+| 5.0 | 5. 
+7. Find the top 3 users based on their total number of reviews:
+SQL code used to arrive at answer:
+select id,
+name,
+review_count
+from user
+order by review_count desc
+limit 3;
+Copy and Paste the Result Below:
++------------------------+--------+--------------+
+| id | name | review_count |
++------------------------+--------+--------------+
+| -G7Zkl1wIWBBmD0KRy_sCw | Gerald | 2000 |
+| -3s52C4zL_DHRK0ULG6qtg | Sara | 1629 |
+| -8lbUNlXVSoXqaRRiHiSNg | Yuri | 1339
+8. Does posing more reviews correlate with more fans?
+Please explain your findings and interpretation of the results:
+Yes
+Query 1:
+select review_count,
+fans
+from user
+order by review_count desc;
+Output:
++--------------+------+
+| review_count | fans |
++--------------+------+
+| 2000 | 253 |
+| 1629 | 50 |
+| 1339 | 76 |
+| 1246 | 101 |
+| 1215 | 126 |
+| 1153 | 311 |
+| 1116 | 16 |
+| 1039 | 104 |
+| 968 | 497 |
+| 930 | 173 |
+| 904 | 38 |
+| 864 | 43 |
+| 862 | 124 |
+| 861 | 115 |
+| 842 | 85 |
+| 836 | 37 |
+| 834 | 120 |
+| 813 | 159 |
+| 775 | 61 |
+| 754 | 78 |
+| 702 | 35 |
+| 696 | 10 |
+| 694 | 101 |
+| 676 | 25 |
+| 675 | 45 |
++--------------+------+
+(Output limit exceeded, 25 of 10000 total rows shown)
+As per the above output, not everyone that has maximum review_counts has a 
+good number of fans as well. Similarly, users, who have a good number of 
+fans, but don’t have the highest number of review posts. But, in most cases 
+they do. Hence, yes.
+Query 2:
+select review_count,
+fans
+from user
+order by fans desc;
+Output:
++--------------+------+
+| review_count | fans |
++--------------+------+
+| 609 | 503 |
+| 968 | 497 |
+| 1153 | 311 |
+| 2000 | 253 |
+| 930 | 173 |
+| 813 | 159 |
+| 377 | 133 |
+| 1215 | 126 |
+| 862 | 124 |
+| 834 | 120 |
+| 861 | 115 |
+| 408 | 111 |
+| 255 | 105 |
+| 1039 | 104 |
+| 694 | 101 |
+| 1246 | 101 |
+| 307 | 96 |
+| 584 | 89 |
+| 842 | 85 |
+| 220 | 84 |
+| 408 | 81 |
+| 178 | 80 |
+| 754 | 78 |
+| 1339 | 76 |
+| 161 | 73 |
++--------------+------+
+(Output limit exceeded, 25 of 10000 total rows shown)
+Also, looking at the columns in the User table, it's possible that the number 
+of fans would be dependent on other factors(columns) as well.
+9. Are there more reviews with the word "love" or with the word "hate" in 
+them?
+Answer:
+The number of reviews that used the word love is 1780, whereas the number of 
+reviews using the word hate is just 232. Hence, There are more reviews with 
+love.
+SQL code used to arrive at the answer:
+select count(*)
+from review
+where UPPER(text) like "%LOVE%" ;
+select count(*)
+from review
+where UPPER(text) like "%HATE%" ;
+10. Find the top 10 users with the most fans:
+SQL code used to arrive at the answer:
+select id,
+name,
+fans
+from user
+order by fans desc
+limit 10;
+Copy and Paste the Result Below:
++------------------------+-----------+------+
+| id | name | fans |
++------------------------+-----------+------+
+| -9I98YbNQnLdAmcYfb324Q | Amy | 503 |
+| -8EnCioUmDygAbsYZmTeRQ | Mimi | 497 |
+| --2vR0DIsmQ6WfcSzKWigw | Harald | 311 |
+| -G7Zkl1wIWBBmD0KRy_sCw | Gerald | 253 |
+| -0IiMAZI2SsQ7VmyzJjokQ | Christine | 173 |
+| -g3XIcCb2b-BD0QBCcq2Sw | Lisa | 159 |
+| -9bbDysuiWeo2VShFJJtcw | Cat | 133 |
+| -FZBTkAZEXoP7CYvRV2ZwQ | William | 126 |
+| -9da1xk7zgnnfO1uTVYGkA | Fran | 124 |
+| -lh59ko3dxChBSZ9U7LfUw | Lissa | 120
+Part 2: Inferences and Analysis
+1. Pick one city and category of your choice and group the businesses in that 
+city or category by their overall star rating. Compare the businesses with 2-
+3 stars to the businesses with 4-5 stars and answer the following questions. 
+Include your code.
+I have selected the businesses in Phoenix.
+i. Do the two groups you chose to analyze have a different distribution of 
+hours?
+As per the analysis, we don’t see much of a relationship between the hours on 
+days of the week and the star rating for the businesses. Hence, there must be 
+other factors, where we might be able to establish a correlation, but not in 
+this case.
+Query used:
+Adding an extra categorical variable based on which star rating the business has
+For easy analysis, added 7 columns for every day to compare the hours for all 
+business basd on every day of week
+*/
+select b.id,
+CASE
+ WHEN b.stars=2.0 OR b.stars=2.5 or b.stars=3.0 THEN "2-3"
+ else "4-5"
+end Stars_category,
+ MAX(CASE WHEN lower(LTRIM(hours)) like 'monday%' THEN hours END) AS Monday,
+ MAX(CASE WHEN lower(LTRIM(hours)) like 'tuesday%' THEN hours END) AS Tuesday,
+ MAX(CASE WHEN lower(LTRIM(hours)) like 'wednesday%' THEN hours END) AS Wednesday,
+ MAX(CASE WHEN lower(LTRIM(hours)) like 'thursday%' THEN hours END) AS Thursday,
+ MAX(CASE WHEN lower(LTRIM(hours)) like 'friday%' THEN hours END) AS Friday,
+ MAX(CASE WHEN lower(LTRIM(hours)) like 'saturday%' THEN hours END) AS Saturday,
+ MAX(CASE WHEN lower(LTRIM(hours)) like 'sunday%' THEN hours END) AS Sunday
+from business as b
+inner join hours as h 
+on b.id=h.business_id
+where city="Phoenix"
+and stars in (2.0,2.5,3.0,4.0,4.5,5.0)
+group by b.id
+order by stars_category;
+ii. Do the two groups you chose to analyze have a different number of 
+reviews?
+Yes, the two groups have different numbers of reviews. The total reviews for 
+the businesses in the category of star rating 2-3 is 6530 whereas the 
+businesses in the category of star rating 4-5 have a total of 19848 reviews.
+Query used:
+select
+CASE
+ WHEN stars=2.0 OR stars=2.5 or stars=3.0 THEN "2-3"
+ else "4-5"
+end Stars_category,
+SUM(review_count) as Total_reviews 
+from business
+where city="Phoenix"
+and stars in (2.0,2.5,3.0,4.0,4.5,5.0) 
+group by Stars_category;
+ 
+ 
+iii. Are you able to infer anything from the location data provided between 
+these two groups? Explain.
+Yes, we can infer a lot from the location details, like which postal codes 
+have more businesses with 2-3 rating or which postal codes have more 
+businesses with 4-5 rating.
+SQL code used for analysis:
+select distinct postal_code,
+CASE
+ WHEN stars=2.0 OR stars=2.5 or stars=3.0 THEN "2-3"
+ else "4-5"
+end Stars_category,
+SUM(review_count) 
+from business
+where city="Phoenix"
+and stars in (2.0,2.5,3.0,4.0,4.5,5.0)
+group by postal_code,Stars_category
+order by Stars_category,postal_code;
+2. Group business based on the ones that are open and the ones that are 
+closed. What differences can you find between the ones that are still open 
+and the ones that are closed? List at least two differences and the SQL code 
+you used to arrive at your answer.
+i. Difference 1:
+ 
+The first difference that I could figure out was the total number of reviews 
+for the businesses that are already closed.
+SQL code used for analysis:
+select is_open,
+sum(review_count)
+from business
+group by is_open;
+ 
+ii. Difference 2:
+ 
+Another difference that we could figure out was in the category of business 
+that have been closed after being opened at some point of time.
+ 
+SQL code used for analysis:
+select distinct c.category
+from business b
+inner join category c
+on b.id=c.business_id
+where b.is_open=1
+and c.category not in (
+ select c2.category
+ from business b2
+ inner join category c2
+ on b2.id=c2.business_id
+ where b2.is_open=0
+);
+3. For this last part of your analysis, you are going to choose the type of 
+analysis you want to conduct on the Yelp dataset and are going to prepare the 
+data for analysis.
+Ideas for analysis include: Parsing out keywords and business attributes for 
+sentiment analysis, clustering businesses to find commonalities or anomalies 
+between them, predicting the overall star rating for a business, predicting 
+the number of fans a user will have, and so on. These are just a few examples 
+to get you started, so feel free to be creative and come up with your own 
+problem you want to solve. Provide answers, in-line, to all of the following:
+i. Indicate the type of analysis you chose to do:
+I am interested in performing Business Attributes. In this analysis, we can 
+derive, what are the different attribute values that contribute to the higher 
+star ratings of the business as compared to others. 
+ 
+ii. Write 1-2 brief paragraphs on the type of data you will need for your 
+analysis and why you chose that data:
+We’re here to identify the behavior of people based on the attributes of the 
+restaurant. For instance, if I’m taking my girl to a fine restaurant for a 
+date, I’d expect the place to have a decent parking space. Similarly, If I’m 
+sitting in a café just to make sure, I can catch up on my pending Python 
+codes, I’d appreciate less noise and better WIFI. So, depending upon the 
+business, the attributes contribute a lot to the high positive ratings.
+Thus, we’d need data from 3 tables, from the Yelp database to be together, 
+i.e., the Business table, the attribute table, and the review table. And then 
+we can aggregate the ratings for each attribute value as well, to identify 
+the impact of each attribute value over the ratings of the business. 
+ 
+iii. Output of your finished dataset:
++------------------------+----------------------------+-------------------+
+| id | name | average_Stars |
++------------------------+----------------------------+-------------------+
+| 2skQeu3C36VCiB653MIfrw | Alcohol | 4.666666666666667 |
+| 2skQeu3C36VCiB653MIfrw | Ambience | 4.666666666666667 |
+| 2skQeu3C36VCiB653MIfrw | BestNights | 4.666666666666667 |
+| 2skQeu3C36VCiB653MIfrw | BikeParking | 4.666666666666667 |
+| 2skQeu3C36VCiB653MIfrw | BusinessAcceptsCreditCards | 4.666666666666667 |
+| 2skQeu3C36VCiB653MIfrw | BusinessParking | 4.666666666666667 |
+| 2skQeu3C36VCiB653MIfrw | Caters | 4.666666666666667 |
+| 2skQeu3C36VCiB653MIfrw | CoatCheck | 4.666666666666667 |
+| 2skQeu3C36VCiB653MIfrw | DogsAllowed | 4.666666666666667 |
+| 2skQeu3C36VCiB653MIfrw | GoodForDancing | 4.666666666666667 |
+| 2skQeu3C36VCiB653MIfrw | GoodForKids | 4.666666666666667 |
+| 2skQeu3C36VCiB653MIfrw | GoodForMeal | 4.666666666666667 |
+| 2skQeu3C36VCiB653MIfrw | HappyHour | 4.666666666666667 |
+| 2skQeu3C36VCiB653MIfrw | HasTV | 4.666666666666667 |
+| 2skQeu3C36VCiB653MIfrw | Music | 4.666666666666667 |
+| 2skQeu3C36VCiB653MIfrw | NoiseLevel | 4.666666666666667 |
+| 2skQeu3C36VCiB653MIfrw | OutdoorSeating | 4.666666666666667 |
+| 2skQeu3C36VCiB653MIfrw | RestaurantsAttire | 4.666666666666667 |
+| 2skQeu3C36VCiB653MIfrw | RestaurantsDelivery | 4.666666666666667 |
+| 2skQeu3C36VCiB653MIfrw | RestaurantsGoodForGroups | 4.666666666666667 |
+| 2skQeu3C36VCiB653MIfrw | RestaurantsPriceRange2 | 4.666666666666667 |
+| 2skQeu3C36VCiB653MIfrw | RestaurantsReservations | 4.666666666666667 |
+| 2skQeu3C36VCiB653MIfrw | RestaurantsTableService | 4.666666666666667 |
+| 2skQeu3C36VCiB653MIfrw | RestaurantsTakeOut | 4.666666666666667 |
+| 2skQeu3C36VCiB653MIfrw | Smoking | 4.666666666666667
+ 
+ 
+iv. Provide the SQL code you used to create your final dataset:
+select b.id,
+a.name,
+AVG(r.stars) as average_Stars
+from attribute a 
+inner join business b 
+on a.business_id=b.id
+inner join review r
+on b.id=r.business_id
+group by b.id,a.name
+order by average_Stars;
