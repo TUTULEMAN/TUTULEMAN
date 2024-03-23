@@ -1,6 +1,3 @@
-# Write a function that takes injection dates, withdrawal dates, the prices at which the commodity can be 
-purchased/sold on those dates, the rate at which the gas can be injected/withdrawn, the maximum volume that can be 
-stored, and storage costs to give back the value of a FX contract.
 # Quick Explanation: the code first organizes all the dates in ascending order then calc. all the cashflows on each 
 dates -> if the current date is an injection date, it injects gas into the storage facility and finds the costs
 -> if the current date is a withdrawal date, it withdraws gas from the storage facility and finds the revenue
