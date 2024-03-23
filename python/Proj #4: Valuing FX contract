@@ -77,4 +77,4 @@ rate, storage_cost_rate, max_storage_volume, injection_withdrawal_cost_rate)
 print()
 print(f"The value of the contract is: ${result}")
 
-# Assuming the csv file used for this proj is also the same as Proj 3 and followed to same importing procedures
+
