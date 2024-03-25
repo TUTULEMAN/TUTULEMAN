@@ -1,0 +1,14 @@
+class Person:
+   def __init__(self, name, age):
+       self.name = name
+       self.age = age
+
+# Get user input for name and age
+name = input("Enter your name: ")
+age = int(input("Enter your age: "))  # Convert age to integer
+
+# Create a Person object using the provided input
+p1 = Person(name, age)
+
+# Print the person's attributes
+print(p1.name, "is", p1.age, "years old")
