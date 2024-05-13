@@ -1,0 +1,15 @@
+#pip install vpython
+
+from vpython import *
+
+# Create a 3D box
+box_object = box(pos=vector(0, 0, 0), size=vector(1, 1, 1), color=color.green)
+
+while True:
+    rate(100)  # Limit the execution speed to 100 loops per second
+    if scene.mouse.clicked:
+        mouse_event = scene.mouse.getclick()  # Get the mouse click event
+        # If the box is clicked, change its color and size
+        if mouse_event.pick == box_object:
+            box_object.color = vector(random(), random(), random())  # Change the color to a random color
+            box_object.size = vector(random(), random(), random())  # Change the size to random dimensions
