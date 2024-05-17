@@ -1,0 +1,25 @@
+#pip install numpy scipy matplotlib
+
+import numpy as np
+import matplotlib.pyplot as plt
+from scipy import integrate
+
+# Define the function
+def f(x):
+    return x**2
+
+x = np.linspace(0, 10, 1000)
+
+# Calculate integral from 0 to 10
+y, error = integrate.quad(f, 0, 10)
+
+print("The integral of f from 0 to 10 is:", y)
+
+# Plot the function
+plt.plot(x, f(x), 'r', label='x^2')
+
+# Fill the area under the function
+plt.fill_between(x, f(x), color='red', alpha=0.1)
+
+plt.legend()
+plt.show()
