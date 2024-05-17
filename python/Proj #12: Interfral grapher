@@ -8,12 +8,16 @@ from scipy import integrate
 def f(x):
     return x**2
 
+# Get input from user for range of integration
+start = float(input("Enter the start of the range: "))
+end = float(input("Enter the end of the range: "))
+
 x = np.linspace(0, 10, 1000)
 
-# Calculate integral from 0 to 10
-y, error = integrate.quad(f, 0, 10)
+# Calculate integral from start to end
+y, error = integrate.quad(f, start, end)
 
-print("The integral of f from 0 to 10 is:", y)
+print("The integral of f from " + str(start) + " to " + str(end) + " is:", y)
 
 # Plot the function
 plt.plot(x, f(x), 'r', label='x^2')
