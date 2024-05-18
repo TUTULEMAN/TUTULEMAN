@@ -1,0 +1,34 @@
+import time
+string = "This is a game made by Tuong Max Le, hope you enjoy"
+word_count = len(string.split())
+border='-*-'*10
+
+def createbox()
+		print (border)
+		print()
+		print('Try to enter this phrase as fast as possible')
+		print()
+
+while 1:
+		t0= time.time()
+		createbox()
+		print(string,"\n")
+		inputText = str(input())
+		t1=time.time()
+		lengthofInput= len(inputText.split())
+		accuracy=len(set(inputText.split())&set(string.split())
+		timeTaken=(t1-t0)
+		wordsperminute=(lengthofInput/timeTaken)*60
+		#show results
+		print('Total words \t:', lengthofInput)
+		print('Time used \t:', round(timeTaken,2), 'seconds')
+		print('Accuracy \t:', round(accuracy,3)*100, '%')
+		print('Speed is \t:', round(wordsperminute,2), 'words per minute')
+		print('Do you want to retry?', end='')
+		if input():
+				continue
+		else: 
+				print('Thanks, good bye.')
+				time.sleep(2)
+				break
+
