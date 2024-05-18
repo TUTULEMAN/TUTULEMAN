@@ -35,6 +35,5 @@ def typing_game():
             print('Thanks, good bye.')
             time.sleep(2)
             break
-
 typing_game()
 
