@@ -1,0 +1,27 @@
+class Order:
+    def __init__(self, trader_id, price, quantity):
+        self.trader_id = trader_id
+        self.price = price
+        self.quantity = quantity
+
+class OrderBook:
+    def __init__(self):
+        self.buy_orders = []
+        self.sell_orders = []
+
+    def add_order(self, order, order_type):
+        if order_type == 'buy':
+            self.buy_orders.append(order)
+            self.buy_orders.sort(key=lambda x: x.price, reverse=True)  # highest price first
+        elif order_type == 'sell':
+            self.sell_orders.append(order)
+            self.sell_orders.sort(key=lambda x: x.price)  # lowest price first
+
+    def view_book(self):
+        print('Buy orders:')
+        for order in self.buy_orders:
+            print(f'Trader: {order.trader_id}, Price: {order.price}, Quantity: {order.quantity}')
+
+        print('Sell orders:')
+        for order in self.sell_orders:
+            print(f'Trader: {order.trader_id}, Price: {order.price}, Quantity: {order.quantity}')
