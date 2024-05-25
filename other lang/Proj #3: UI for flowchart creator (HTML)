@@ -1,0 +1,139 @@
+<!DOCTYPE html>;
+<html>
+<head>
+    <title>Flowchart Creator</title>
+    <style>
+        .shape {
+            position: absolute;
+            border: 2px solid black;
+            background-color: white;
+            padding: 10px;
+        }
+        .arrow {
+            position: absolute;
+            border: 2px solid black;
+            background-color: transparent;
+        }
+    </style>
+</head>
+<body>
+    <div id="canvas" style="position: relative; width: 800px; height: 600px;"></div>
+    <button onclick="createShape()">Create Shape</button>
+    <script>
+        let canvas = document.getElementById("canvas");
+        let shapes = [];
+        let arrows = [];
+
+        function createShape() {
+            let shape = document.createElement("div");
+            shape.className = "shape";
+            shape.style.left = "100px";
+            shape.style.top = "100px";
+            shape.contentEditable = "true";
+            shape.addEventListener("mousedown", startArrow);
+            shape.addEventListener("mouseup", endArrow);
+            canvas.appendChild(shape);
+            shapes.push(shape);
+        }
+
+        function startArrow(event) {
+            let arrow = document.createElement("div");
+            arrow.className = "arrow";
+            arrow.style.left = event.clientX + "px";
+            arrow.style.top = event.clientY + "px";
+            arrow.startShape = this;
+            arrow.addEventListener("mousemove", drawArrow);
+            canvas.appendChild(arrow);
+            arrows.push(arrow);
+        }
+
+        function endArrow(event) {
+            let arrow = arrows.find(a => a.startShape === this);
+            arrow.removeEventListener("mousemove", drawArrow);
+            arrows = arrows.filter(a => a !== arrow);
+            let endShape = shapes.find(shape => isInside(event.clientX, event.clientY, shape));
+            if (endShape) {
+                drawArrow.call(arrow, { clientX: endShape.offsetLeft + endShape.offsetWidth / 2, clientY: endShape.offsetTop + endShape.offsetHeight / 2 });
+            } else {
+                canvas.removeChild(arrow);
+            }
+        }
+
+        function drawArrow(event) {
+            this.style.width = Math.sqrt(Math.pow(event.clientX - this.startShape.offsetLeft - this.startShape.offsetWidth / 2, 2) + Math.pow(event.clientY - this.startShape.offsetTop - this.startShape.offsetHeight / 2, 2)) + "px";
+            this.style.transform = "rotate(" + Math.atan2(event.clientY - this.startShape.offsetTop - this.startShape.offsetHeight / 2, event.clientX - this.startShape.offsetLeft - this.startShape.offsetWidth / 2) + "rad)";
+        }
+
+        function isInside(x, y, element) {
+            let rect = element.getBoundingClientRect();
+            return x >= rect.left && x <= rect.right && y >= rect.top && y <= rect.bottom;
+        }
+        function colorshape(){
+            let shape = document.createElement("div");
+            shape.className = "shape";
+            shape.style.left = "100px";
+            shape.style.top = "100px";
+            shape.contentEditable = "true";
+            shape.addEventListener("mousedown", startArrow);
+            shape.addEventListener("mouseup", endArrow);
+            canvas.appendChild(shape);
+            shapes.push(shape);
+        }
+        function makeShapeDraggable(shape) {
+            let isDragging = false;
+            let offsetX = 0;
+            let offsetY = 0;
+
+            shape.addEventListener("mousedown", startDrag);
+            shape.addEventListener("mousemove", drag);
+            shape.addEventListener("mouseup", endDrag);
+            shape.addEventListener("mouseleave", endDrag);
+
+            function startDrag(event) {
+                isDragging = true;
+                offsetX = event.clientX - shape.offsetLeft;
+                offsetY = event.clientY - shape.offsetTop;
+            }
+
+            function drag(event) {
+                if (isDragging) {
+                    shape.style.left = event.clientX - offsetX + "px";
+                    shape.style.top = event.clientY - offsetY + "px";
+                }
+            }
+
+            function endDrag() {
+                isDragging = false;
+            }
+        }
+
+        function createShape() {
+            let shape = document.createElement("div");
+            shape.className = "shape";
+            shape.style.left = "100px";
+            shape.style.top = "100px";
+            shape.contentEditable = "true";
+            shape.addEventListener("mousedown", startArrow);
+            shape.addEventListener("mouseup", endArrow);
+            makeShapeDraggable(shape); // Make the shape draggable
+            canvas.appendChild(shape);
+            shapes.push(shape);
+        }
+        function insertPicture() {
+            let pictureUrl = prompt("Enter the URL of the picture:");
+            if (pictureUrl) {
+                let picture = document.createElement("img");
+                picture.src = pictureUrl;
+                picture.className = "shape";
+                picture.style.left = "100px";
+                picture.style.top = "100px";
+                picture.addEventListener("mousedown", startArrow);
+                picture.addEventListener("mouseup", endArrow);
+                makeShapeDraggable(picture); // Make the picture draggable
+                canvas.appendChild(picture);
+                shapes.push(picture);
+            }
+        }
+    </script>
+</body>
+</html>
