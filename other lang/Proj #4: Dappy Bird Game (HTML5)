@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dappy Bird by Tuong</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+        }
+        #gameCanvas {
+            border: 1px solid black;
+        }
+        #gameOver {
+            position: absolute;
+            background-color: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 20px;
+            text-align: center;
+            display: none;
+        }
+        #restartButton {
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 18px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div id="gameContainer">
+        <canvas id="gameCanvas" width="320" height="480"></canvas>
+        <div id="gameOver">
+            <h2>Game Over</h2>
+            <p>Score: <span id="finalScore"></span></p>
+            <p>Time: <span id="finalTime"></span></p>
+            <button id="restartButton">Restart</button>
+        </div>
+    </div>
+    <script>
+        const canvas = document.getElementById('gameCanvas');
+        const ctx = canvas.getContext('2d');
+        const gameOverScreen = document.getElementById('gameOver');
+        const finalScoreSpan = document.getElementById('finalScore');
+        const finalTimeSpan = document.getElementById('finalTime');
+        const restartButton = document.getElementById('restartButton');
+
+        // Game variables
+        let bird = {
+            x: 50,
+            y: 200,
+            velocity: 0,
+            radius: 20
+        };
+        let pipes = [];
+        let score = 0;
+        let gameSpeed = 2;
+        let startTime;
+        let gameRunning = true;
+
+        // Game constants
+        const gravity = 0.5;
+        const jump = -10;
+        const pipeWidth = 50;
+        const pipeGap = 180;
+
+        function gameLoop() {
+            if (gameRunning) {
+                update();
+                draw();
+                requestAnimationFrame(gameLoop);
+            }
+        }
+
+        function update() {
+            bird.velocity += gravity;
+            bird.y += bird.velocity;
+
+            if (pipes.length === 0 || pipes[pipes.length - 1].x < canvas.width - 200) {
+                let pipeY = Math.random() * (canvas.height - pipeGap - 100) + 50;
+                pipes.push({ x: canvas.width, y: pipeY });
+            }
+
+            for (let pipe of pipes) {
+                pipe.x -= gameSpeed;
+
+                if (
+                    bird.x + bird.radius > pipe.x &&
+                    bird.x - bird.radius < pipe.x + pipeWidth &&
+                    (bird.y - bird.radius < pipe.y - pipeGap / 2 ||
+                    bird.y + bird.radius > pipe.y + pipeGap / 2)
+                ) {
+                    gameOver();
+                }
+
+                if (pipe.x + pipeWidth < bird.x && !pipe.passed) {
+                    score++;
+                    pipe.passed = true;
+                    gameSpeed += 0.1;
+                }
+            }
+
+            pipes = pipes.filter(pipe => pipe.x + pipeWidth > 0);
+
+            if (bird.y + bird.radius > canvas.height || bird.y - bird.radius < 0) {
+                gameOver();
+            }
+        }
+
+        function draw() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            ctx.beginPath();
+            ctx.arc(bird.x, bird.y, bird.radius, 0, Math.PI * 2);
+            ctx.fillStyle = 'yellow';
+            ctx.fill();
+            ctx.closePath();
+
+            for (let pipe of pipes) {
+                ctx.fillStyle = 'green';
+                ctx.fillRect(pipe.x, 0, pipeWidth, pipe.y - pipeGap / 2);
+                ctx.fillRect(pipe.x, pipe.y + pipeGap / 2, pipeWidth, canvas.height - pipe.y - pipeGap / 2);
+            }
+
+            ctx.fillStyle = 'black';
+            ctx.font = '24px Arial';
+            ctx.fillText('Dappy Bird by Tuong', 50, 30);
+
+            ctx.font = '20px Arial';
+            ctx.fillText(`Score: ${score}`, 10, 60);
+            ctx.fillText(`Time: ${getElapsedTime()}`, 10, 90);
+        }
+
+        function resetGame() {
+            bird.y = 200;
+            bird.velocity = 0;
+            pipes = [];
+            score = 0;
+            gameSpeed = 2;
+            startTime = Date.now();
+            gameRunning = true;
+            gameOverScreen.style.display = 'none';
+            gameLoop();
+        }
+
+        function gameOver() {
+            gameRunning = false;
+            finalScoreSpan.textContent = score;
+            finalTimeSpan.textContent = getElapsedTime();
+            gameOverScreen.style.display = 'block';
+        }
+
+        function getElapsedTime() {
+            const elapsed = Math.floor((Date.now() - startTime) / 1000);
+            const minutes = Math.floor(elapsed / 60);
+            const seconds = elapsed % 60;
+            return `${minutes}:${seconds.toString().padStart(2, '0')}`;
+        }
+
+        document.addEventListener('keydown', event => {
+            if (event.code === 'Space' && gameRunning) {
+                bird.velocity = jump;
+            }
+        });
+
+        canvas.addEventListener('click', () => {
+            if (gameRunning) {
+                bird.velocity = jump;
+            }
+        });
+
+        restartButton.addEventListener('click', resetGame);
+
+        resetGame();
+    </script>
+</body>
+</html>
