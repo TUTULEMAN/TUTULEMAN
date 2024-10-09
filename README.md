@@ -1,7 +1,8 @@
 # Welcome to my GitHub
 
 ## 💬 Introduction 💬
-I will be putting my personal financial analysis and programming proj here:)
+- I will be putting my personal financial analysis and programming proj here:)
+- VC + IB Intern
 
 ## ⚡ Fun Facts ⚡
 - Karate Kumite Gold Medalist
