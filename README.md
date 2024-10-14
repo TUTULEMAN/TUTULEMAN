@@ -7,6 +7,8 @@
 ## ⚡ Fun Facts ⚡
 - Karate Kumite Gold Medalist
 - (co-founder) Growing Arms Organization non-profit
+- (Fouder + lead-analyst) The Analyst's Edge
+- (President) The Golf Org @ UIC
 
 ## 📫 Contact Info 📫
 - tle221@uic.edu
