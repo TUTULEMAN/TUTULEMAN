@@ -4,14 +4,14 @@ dates -> if the current date is an injection date, it injects gas into the stora
 from selling the gas and additional costs -> finds net profit (storage cost + cost to purchase gas - cash inflow 
 from selling gas)
 
-# in_dates: A list of dates on which the gas is being injected into the storage facility
-# in_prices: A list of prices of gas on each of the injection dates
-# out_dates: A list of dates on which the gas is being withdrawn from the storage facility
-# out_prices: A list of prices of gas on each of the withdrawal dates
-# rate: The rate of gas in cubic feet per day
-# storage_cost_rate: A fixed monthly fee to store the gas
-# total_vol: The total volume of gas in cubic feet that can be stored.
-# injection_withdrawal_cost_rate: The injection/withdrawal cost of gas in dollars per cubic foot.
+    ''' in_dates: A list of dates on which the gas is being injected into the storage facility
+     in_prices: A list of prices of gas on each of the injection dates
+     out_dates: A list of dates on which the gas is being withdrawn from the storage facility
+     out_prices: A list of prices of gas on each of the withdrawal dates
+     rate: The rate of gas in cubic feet per day
+     storage_cost_rate: A fixed monthly fee to store the gas
+     total_vol: The total volume of gas in cubic feet that can be stored.
+     injection_withdrawal_cost_rate: The injection/withdrawal cost of gas in dollars per cubic foot.'''
 
 from datetime import date
 import math
@@ -42,7 +42,7 @@ storage_cost_rate, total_vol, injection_withdrawal_cost_rate):
             else:
                 # We do not want to inject when rate > than total(volume)-volume
                 print('Injection is not possible on date %s as there is insufficient space in the storage 
-                facility'%start_date)
+                facility'%start_date')
         elif start_date in out_dates:
             # Withdraw on these dates and sum cash flows
             if volume >= rate:
