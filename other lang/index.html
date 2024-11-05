@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ping Pong Game</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Menu Screen -->
+    <div id="menuScreen">
+        <h1>Ping Pong Game</h1>
+        <label for="difficulty">Select Difficulty:</label>
+        <select id="difficulty">
+            <option value="easy">Easy</option>
+            <option value="medium">Medium</option>
+            <option value="hard">Hard</option>
+        </select>
+        <button id="startButton">Start Game</button>
+    </div>
+
+    <!-- Game Over Screen -->
+    <div id="gameOverScreen" style="display: none;">
+        <h2>Game Over</h2>
+        <p>Your Score: <span id="scoreDisplay"></span></p>
+        <button id="restartButton">Play Again</button>
+    </div>
+
+    <!-- Game Elements -->
+    <div id="status">
+        <div id="timer" style="color: red; font-size: 24px;">00:00</div>
+        <div id="playerHealth">Player Health: 5</div>
+        <div id="aiHealth">AI Health: 5</div>
+    </div>
+
+    <!-- Canvas for Game -->
+    <canvas id="pongCanvas"></canvas>
+
+    <!-- Roulette Wheel Screen -->
+    <div id="rouletteScreen" style="display: none;">
+        <h2>Spin the Wheel!</h2>
+        <button id="spinButton">Spin</button>
+        <div id="resultDisplay"></div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
+
