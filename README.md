@@ -2,7 +2,7 @@
 
 ## 💬 Introduction 💬
 - I will be putting my personal financial analysis and programming proj here:)
-- VC + IB Intern
+- VC (Summer 24) + PE (Fall 24 - Spring 25) + IB (Spring 25)
 
 ## ⚡ Fun Facts ⚡
 - Karate Kumite Gold Medalist
